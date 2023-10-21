@@ -30,7 +30,7 @@ Avoid creating an array whose memory footprint is roughly as big as the input te
 Avoid sorting the entire array of unique words.
 """
 
-import re
+import reimport re
 import operator
 import string
 
@@ -38,14 +38,16 @@ def top_3_words(text):
     if not text:
         return []
     words = {}
+    translator = str.maketrans(string.punctuation.replace("'", ""), ' '*len(string.punctuation.replace("'", "")))
+    text = text.translate(translator)
     for word in text.lower().split():
-        translator = word.maketrans('', '', string.punctuation)
-        word =re.sub("[^A-Z']", "", word,0,re.IGNORECASE)
-        print(word)
-        if word and len(word) != word.count("'"):
+        apostrophes = len(re.findall(r"(?<!\w)'(?!w)", word))
+
+        if apostrophes > 1:
+            word = re.sub(r"'+", "'", word)
+        if word and word != "'":
             words[word] =1 + words.get(word, 0)
         
     words = dict( sorted(words.items(), key=operator.itemgetter(1),reverse=True))
-    print(words)
     ret = list(words.keys())[0:3]
     return ret
