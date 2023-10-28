@@ -29,7 +29,7 @@ Avoid creating an array whose memory footprint is roughly as big as the input te
 Avoid sorting the entire array of unique words.
 """
 
-import reimport re
+import re
 import operator
 import string
 
